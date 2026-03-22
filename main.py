@@ -21,7 +21,7 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     
-    Clock = pygame.time.Clock()
+    clock = pygame.time.Clock()
     dt = 0
     tick_rate = 60
 
@@ -46,8 +46,8 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        
-        dt = (Clock.tick(tick_rate))/1000
+
+        dt = (clock.tick(tick_rate))/1000
         screen.fill("black")
         updatable.update(dt)
         for ast in asteroids:
@@ -55,6 +55,12 @@ def main():
                 log_event("player_hit")
                 print("Game Over!")
                 sys.exit()
+            for shot in shots:
+                if ast.collides_with(shot):
+                    log_event("asteroid_shot")
+                    ast.split()
+                    shot.kill()
+
         for item in drawable:
             item.draw(screen)
         pygame.display.flip()
