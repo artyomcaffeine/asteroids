@@ -1,8 +1,16 @@
 from logger import log_state
+from logger import log_event
+
 from constants import SCREEN_WIDTH 
 from constants import SCREEN_HEIGHT
 
+import sys
 import pygame
+
+from asteroidfield import AsteroidField
+from player import Player
+from asteroid import Asteroid
+from shot import Shot
 
 def main():
     
@@ -38,9 +46,17 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-            pass
         
+        dt = (Clock.tick(tick_rate))/1000
         screen.fill("black")
+        updatable.update(dt)
+        for ast in asteroids:
+            if ast.collides_with(player):
+                log_event("player_hit")
+                print("Game Over!")
+                sys.exit()
+        for item in drawable:
+            item.draw(screen)
         pygame.display.flip()
 
 if __name__ == "__main__":
