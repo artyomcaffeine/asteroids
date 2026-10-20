@@ -1,0 +1,107 @@
+:root {
+  --bg: #02010a;
+  --accent: #5ef2ff;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#stage {
+  position: relative;
+  line-height: 0;
+  box-shadow: 0 0 80px rgba(94, 242, 255, 0.08);
+}
+
+#game {
+  display: block;
+  cursor: crosshair;
+}
+
+/* faint CRT scanlines layered over the canvas */
+#scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.025) 0px,
+    rgba(255, 255, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+/* ---------- touch controls (shown only on touch devices) ---------- */
+#touch {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 16px;
+  pointer-events: none;
+}
+
+body.touch #touch { display: flex; }
+
+#touch .cluster {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+#touch button {
+  pointer-events: auto;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 2px solid rgba(94, 242, 255, 0.55);
+  background: rgba(10, 30, 50, 0.35);
+  color: var(--accent);
+  font-size: 24px;
+  font-family: inherit;
+  box-shadow: 0 0 14px rgba(94, 242, 255, 0.25), inset 0 0 12px rgba(94, 242, 255, 0.15);
+  backdrop-filter: blur(2px);
+}
+
+#touch button.small { width: 52px; height: 52px; font-size: 20px; }
+
+#touch button.fire {
+  width: 84px;
+  height: 84px;
+  border-color: rgba(255, 92, 170, 0.6);
+  color: #ff5caa;
+  box-shadow: 0 0 14px rgba(255, 92, 170, 0.3), inset 0 0 12px rgba(255, 92, 170, 0.2);
+}
+
+#touch button.on { background: rgba(94, 242, 255, 0.3); }
+#touch button.fire.on { background: rgba(255, 92, 170, 0.3); }
+
+#touch-pause {
+  align-self: flex-start;
+  width: 44px !important;
+  height: 44px !important;
+  font-size: 14px !important;
+  position: fixed;
+  top: 12px;
+  right: 12px;
+}
